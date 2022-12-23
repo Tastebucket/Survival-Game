@@ -36,13 +36,23 @@ Title screen displaying title, giving the option to start, view high scores, and
 
 ![GameStart](img/Game_Start_Wireframe.jpg)
 
-Shot of the game. Enemies move randomly around the screen as the player moves using the keyboard, trying to avoid being touched.
+Shot of the game. Enemies move randomly around the screen as the player moves using the keyboard, trying to avoid being touched. Their score is constantly accumulating as the time runs.
 
 ![LateGame](img/Later_Game_Wireframe.jpg)
 
-The player can pick up boosts which give abilities (temporary invulnerability, timestop, destroy enemies, etc.) or just boost the score
+The player can pick up boosts which give abilities (temporary invulnerability, timestop, destroy enemies, etc.) or just boost the score. At later levels, more enemies appear, some with different sizes, speeds or movement patterns.
 
 ![GameOver](img/Game_Over_Wireframe.jpg)
+
+When the player collides with an enemy the game is over. They can save their score with a set of initials.
+
+## Classes, basic development ideas
+-There will be a player class and several different enemy classes.
+-The different enemy classes will have different movement patterns
+-Initial enemy movement will have a set speed and the direction will be determined by a math.random function within a setInterval function
+-Later enemies (same class) will have higher speeds and/or larger sizes
+-Advanced enemies will have their movement optimized to move towards the player, albeit at a slow speed. This will be added only if the initial stages have been perfected.
+
 
 
 
