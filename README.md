@@ -38,7 +38,9 @@ Title screen displaying title, giving the option to start, view high scores, and
 
 Shot of the game. Enemies move randomly around the screen as the player moves using the keyboard, trying to avoid being touched.
 
+![LateGame] (img/Later_Game_Wireframe.jpg)
 
+The player can pick up boosts which give abilities (temporary invulnerability, timestop, destroy enemies, etc.) or just boost the score
 
 
 
