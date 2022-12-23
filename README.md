@@ -30,19 +30,19 @@ As a user I want the ability to:
 
 ## Wireframes
 
-! [TitleScreen](img/Title_Screen_Wireframe.jpg)
+![TitleScreen](img/Title_Screen_Wireframe.jpg)
 
 Title screen displaying title, giving the option to start, view high scores, and instructions. Maybe also change controls
 
-! [GameStart](img/Game_Start_Wireframe.jpg)
+![GameStart](img/Game_Start_Wireframe.jpg)
 
 Shot of the game. Enemies move randomly around the screen as the player moves using the keyboard, trying to avoid being touched.
 
-! [LateGame](img/Later_Game_Wireframe.jpg)
+![LateGame](img/Later_Game_Wireframe.jpg)
 
 The player can pick up boosts which give abilities (temporary invulnerability, timestop, destroy enemies, etc.) or just boost the score
 
-! [GameOver](img/Game_Over_Wireframe.jpg)
+![GameOver](img/Game_Over_Wireframe.jpg)
 
 
 
