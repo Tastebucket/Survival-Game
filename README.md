@@ -47,11 +47,12 @@ The player can pick up boosts which give abilities (temporary invulnerability, t
 When the player collides with an enemy the game is over. They can save their score with a set of initials.
 
 ## Classes, basic development ideas
--There will be a player class and several different enemy classes.
+-There will be a player class and several different enemy classes, and powerup classes.
 -The different enemy classes will have different movement patterns
 -Initial enemy movement will have a set speed and the direction will be determined by a math.random function within a setInterval function
 -Later enemies (same class) will have higher speeds and/or larger sizes
 -Advanced enemies will have their movement optimized to move towards the player, albeit at a slow speed. This will be added only if the initial stages have been perfected.
+- All non-player objects will be created (rendered) via setInterval or set Timeout functions.
 
 
 
