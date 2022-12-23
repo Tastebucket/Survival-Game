@@ -28,5 +28,17 @@ As a user I want the ability to:
 -See the current score displayed
 -See the time elapsed displayed
 
+## Wireframes
+
+! [TitleScreen](img/Game_Over_Wireframe.jpg)
+
+Title screen displaying title, giving the option to start, view high scores, and instructions. Maybe also change controls
+
+![GameStart] (img/Game_Start_Wireframe.jpg)
+
+Shot of the game. Enemies move randomly around the screen as the player moves using the keyboard, trying to avoid being touched.
+
+
+
 
 
