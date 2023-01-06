@@ -1,6 +1,7 @@
 console.log("It's go time")
 
 const game = document.getElementById('canvas')
+const points = document.getElementById('points')
 
 const ctx = game.getContext('2d')
 
@@ -22,7 +23,6 @@ class Enemy {
             ctx.fillRect(this.x, this.y, this.width, this.height)
         }
         this.speed = speed
-        //add direction to be set with movehandler
         this.direction = {
             up: false,
             down: false,
@@ -111,7 +111,6 @@ class Seeker {
             ctx.fillRect(this.x, this.y, this.width, this.height)
         }
         this.speed = speed
-        //add direction to be set with movehandler
         this.direction = {
             up: false,
             down: false,
@@ -273,10 +272,12 @@ const detectHit = (thing) => {
             player.alive = false
         }
 }
-
+let point = 0
 const gameLoop = () => {
 
     ctx.clearRect(0,0, game.width, game.height)
+    point += 1
+    points.textContent = `${point}`
     if (player.alive){
     player.render()
     player.movePlayer()
@@ -359,3 +360,29 @@ const enemyMove = setInterval(setEnemyDirection, 1500)
 
 const gameInterval = setInterval(gameLoop, 30)
 const stopGameLoop = () => { clearInterval(gameInterval) }
+
+////////////////TO DO///////////////////////
+    // Fine tune intervals and levels
+    //// when are certain enemies released? how long is a level??
+    
+    ///////// Title Screen //////////
+    // High scores
+    ///// separate high score box that doesn't get cleared with a reset
+    ///// how to save high score when closing and reloading page?
+    // Play Game
+    // Instructions/controls
+
+    ///////// Beautify /////////////
+    ///Nice background/////
+    // nice lil title screen with cool fonts
+    // what is the story of the game? who is avoiding what?
+
+    ///////// Power Ups ////////////
+    // random generator determines power. perhaps 1-20 with rare powers needing one value
+        // Time Stop: set all speeds to 0
+        // Slow: reduce enemy speeds
+        // Speed Boost: Up player speed
+            ////// for speed related power ups, make sure to get initial speeds to that they can be restored after power up ends
+        // Points: Just simple score boost
+        // invincibility: TBD
+        // nuke: clear all enemy arrays
