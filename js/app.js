@@ -330,7 +330,7 @@ const detectPower = (thing) => {
 
         }
 }
-/// Initial Stopping function, which is working. smallEnemies and seekers are the two arrays of
+///Stopping function, which is working. The timeouts are not. smallEnemies and seekers are the two arrays of enemies
 const timeStop = () => {
     for (let i = 0; i<smallEnemies.length; i++) {
         smallEnemies[i].speed = 0
