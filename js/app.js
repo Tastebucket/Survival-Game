@@ -1,8 +1,10 @@
 console.log("It's go time")
 
 const game = document.getElementById('canvas')
+const container = document.getElementById('container')
 const points = document.getElementById('points')
-
+const titleScreen = document.getElementById('title-screen')
+const startButton = document.getElementById('start-button')
 const ctx = game.getContext('2d')
 
 game.setAttribute('width', getComputedStyle(game)['width'])
@@ -32,7 +34,7 @@ class Enemy {
         this.setDirection = () => {
             //randomizes direction of travel
             const way = Math.floor(Math.random()*4)
-            console.log(way)
+            // console.log(way)
             if (way == 0) {this.direction = {
                 up: true,
                 down: false,
@@ -183,7 +185,7 @@ class User {
         this.height = height
         this.color = color
         this.alive = true
-        this.speed = 12
+        this.speed = 15
         this.direction = {
             up: false,
             down: false,
@@ -258,7 +260,7 @@ const newEnemy = () => {
     console.log(smallEnemies)
 }
 const newSeeker = () => {
-    seekers.push(new Seeker(getRandomCoordinates(game.width), getRandomCoordinates(game.height), 30, 40, 'lightsteelblue',4,true))
+    seekers.push(new Seeker(getRandomCoordinates(game.width), getRandomCoordinates(game.height), 30, 40, 'lightsteelblue',2,true))
     console.log('Gonna getcha')
     console.log(seekers)
 }
@@ -272,6 +274,74 @@ const detectHit = (thing) => {
             player.alive = false
         }
 }
+
+    ///////// Power Ups ////////////
+    // random generator determines power. perhaps 1-20 with rare powers needing one specific value
+        // Time Stop: set all speeds to 0
+
+        // Slow: reduce enemy speeds
+        // Speed Boost: Up player speed
+            ////// for speed related power ups, make sure to get initial speeds to that they can be restored after power up ends
+        // Points: Just simple score boost
+        // invincibility: TBD
+        // nuke: clear all enemy arrays
+const powerArray = []
+class Power {
+    constructor (x,y,color,type) {
+        this.x = x
+        this.y = y
+        this.width = 30
+        this.height = 70
+        this.color = color
+        this.type = type
+        this.render = function (){
+            ctx.fillStyle = this.color
+            ctx.fillRect(this.x, this.y, this.width, this.height)
+        }
+    }
+}
+///////Restart movement function
+const resumeSpeed = (thing, fast) => {
+    for (let i = 0; i > thing.length; i++) {
+        thing[i].speed = fast
+    }
+    // console.log(thing)
+    console.log('as you were')
+
+}
+const createPower = () => {
+    const rando = getRandomCoordinates(20)
+    console.log(`This is the random number: ${rando}`)
+    if (rando >= 0) {
+        powerArray.push(new Power(getRandomCoordinates(game.width),getRandomCoordinates(game.height),'black','stopper'))
+        console.log("pow pow")
+        console.log(powerArray)
+    }
+
+}
+const detectPower = (thing) => {
+    if (player.x < thing.x + thing.width
+        && player.x + player.width > thing.x
+        && player.y < thing.y + thing.height
+        && player.y + player.height > thing.y) {
+            console.log('Boosted!')
+            timeStop()
+            powerArray.pop()
+
+        }
+}
+/// Initial Stopping function, which is working. smallEnemies and seekers are the two arrays of
+const timeStop = () => {
+    for (let i = 0; i<smallEnemies.length; i++) {
+        smallEnemies[i].speed = 0
+    }
+    for (let i = 0; i<seekers.length; i++) {
+        seekers[i].speed = 0
+    }
+    setTimeout(resumeSpeed,5000,smallEnemies,5)
+    setTimeout(resumeSpeed,5000,seekers,2)
+}
+
 let point = 0
 const gameLoop = () => {
 
@@ -298,6 +368,10 @@ const gameLoop = () => {
             seekers[i].setDirection()
             detectHit(seekers[i])
         }
+    }
+    for (let i=0; i<powerArray.length; i++) {
+        powerArray[i].render()
+        detectPower(powerArray[i])
     }
     // enemy.moveEnemy()
     // enemy2.moveEnemy()
@@ -353,6 +427,7 @@ gameInterval
 const lvl1 = setInterval(newEnemy,5000)
 setTimeout(lvl2,15000)
 })
+setTimeout(createPower,8000)
 const lvl2 = () =>{
     const releaseSeeker = setInterval(newSeeker,8000)
 }
@@ -360,6 +435,18 @@ const enemyMove = setInterval(setEnemyDirection, 1500)
 
 const gameInterval = setInterval(gameLoop, 30)
 const stopGameLoop = () => { clearInterval(gameInterval) }
+
+//////Title Screen Functions///////
+const startGame = () => {
+    titleScreen.style.display = 'none'
+}
+// const highlight = (event) => {
+//     event.target.style.color = 'white'
+// }
+
+
+startButton.addEventListener('click',startGame)
+// titleScreen.addEventListener('mouseover', highlight)
 
 ////////////////TO DO///////////////////////
     // Fine tune intervals and levels
@@ -377,12 +464,3 @@ const stopGameLoop = () => { clearInterval(gameInterval) }
     // nice lil title screen with cool fonts
     // what is the story of the game? who is avoiding what?
 
-    ///////// Power Ups ////////////
-    // random generator determines power. perhaps 1-20 with rare powers needing one value
-        // Time Stop: set all speeds to 0
-        // Slow: reduce enemy speeds
-        // Speed Boost: Up player speed
-            ////// for speed related power ups, make sure to get initial speeds to that they can be restored after power up ends
-        // Points: Just simple score boost
-        // invincibility: TBD
-        // nuke: clear all enemy arrays
