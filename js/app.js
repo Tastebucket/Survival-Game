@@ -243,6 +243,7 @@ const getRandomCoordinates = (max) => {
 }
 const player = new User(game.width/2, game.height/2, 20, 20, 'purple')
 const smallEnemies = []
+const seekers = []
 // const enemy = new Enemy(0, 0, 30, 40, 'brown',4,true)
 // const enemy2 = new Enemy(getRandomCoordinates(game.width), getRandomCoordinates(game.height), 30, 40, 'purple',8,true)
 // const enemy3 = new Enemy(getRandomCoordinates(game.width), getRandomCoordinates(game.height),40, 10, 'green',13, false)
@@ -253,9 +254,14 @@ const smallEnemies = []
 //     console.log('Yahoo!')
 // }
 const newEnemy = () => {
-    smallEnemies.push(new Enemy(0, 0, 30, 40, 'brown',4,true))
+    smallEnemies.push(new Enemy(0, 0, 30, 40, 'brown',5,true))
     console.log('Hi')
     console.log(smallEnemies)
+}
+const newSeeker = () => {
+    seekers.push(new Seeker(getRandomCoordinates(game.width), getRandomCoordinates(game.height), 30, 40, 'lightsteelblue',4,true))
+    console.log('Gonna getcha')
+    console.log(seekers)
 }
 
 const detectHit = (thing) => {
@@ -274,9 +280,6 @@ const gameLoop = () => {
     if (player.alive){
     player.render()
     player.movePlayer()
-    seek.render()
-    seek.setDirection()
-    seek.moveEnemy()
     } else {
         stopGameLoop()
     }
@@ -285,6 +288,14 @@ const gameLoop = () => {
             smallEnemies[i].render()
             smallEnemies[i].moveEnemy()
             detectHit(smallEnemies[i])
+        }
+    }
+    for (let i=0; i<seekers.length; i++) {
+        if (seekers[i]){
+            seekers[i].render()
+            seekers[i].moveEnemy()
+            seekers[i].setDirection()
+            detectHit(seekers[i])
         }
     }
     // enemy.moveEnemy()
@@ -321,7 +332,7 @@ const gameLoop = () => {
     // }
 
 }
-const seek = new Seeker (0, 0, 30, 40, 'lightsteelblue',2,true)
+
 document.addEventListener('keydown', (e) =>{
     player.setDirection(e.key)
 })
@@ -339,7 +350,11 @@ const setEnemyDirection = () => {
 document.addEventListener('DOMContentLoaded', function () {
 gameInterval
 const lvl1 = setInterval(newEnemy,5000)
+setTimeout(lvl2,15000)
 })
+const lvl2 = () =>{
+    const releaseSeeker = setInterval(newSeeker,8000)
+}
 const enemyMove = setInterval(setEnemyDirection, 1500)
 
 const gameInterval = setInterval(gameLoop, 30)
