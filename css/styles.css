@@ -1,5 +1,6 @@
 body {
     padding-top: 1em;
+    background-color: rgb(150, 192, 25);
     background-size: cover;
     background-repeat: space;
 }
@@ -8,19 +9,31 @@ canvas {
     width: 100%;
     height: 100%;
 }
+/* #parent {
+    position: relative;
+    max-width: 60em;
+} */
+#title-screen{
+    max-width: 60em;
+    width: 100%;
+    height: 100%;
+    background-color: blueviolet;
+    margin: 0 auto;
+    text-align: center;
+    position: absolute;
+}
 #container {
     max-width: 60em;
-    background-color: rgb(111, 12, 32);
+    /* width: 100%;
+    height: 100%; */
     margin: 0 auto;
-    padding: 1em;
     display: grid;
     gap: 1em;
     grid-template-rows: .2fr .4fr .4fr;
     grid-template-columns: .2fr .8fr;
     grid-template-areas: "tp tp"
                 "side-mdl game"
-                "side-btm game"
-    ;
+                "side-btm game";
 }
 #top, #side-mdl, #side-btm {
     display: flex;
@@ -47,4 +60,7 @@ main {
 }
 #points{
     display: inline-block;
+}
+li:hover{
+    color: antiquewhite;
 }
