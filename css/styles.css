@@ -22,6 +22,38 @@ canvas {
     text-align: center;
     position: absolute;
 }
+#instruction-screen{
+    max-width: 60em;
+    width: 100%;
+    height: 100%;
+    background-color: blueviolet;
+    margin: 0 auto;
+    text-align: center;
+    position: absolute;
+    display: none;
+}
+#high-score-screen{
+    max-width: 60em;
+    width: 100%;
+    height: 100%;
+    background-color: blueviolet;
+    margin: 0 auto;
+    text-align: center;
+    position: absolute;
+    display: none;
+}
+#game-over-screen {
+    width: 400px;
+    background-color: blueviolet;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    position: absolute;
+    display: none;
+}
 #container {
     max-width: 60em;
     /* width: 100%;
@@ -61,6 +93,24 @@ main {
 #points{
     display: inline-block;
 }
-li:hover{
+li {
+    font-size: 28px;
+    padding: 1em;
+    list-style: none;
+}
+#title-screen li:hover{
+    color: antiquewhite;
+}
+#back-button:hover{
+    color: antiquewhite;
+}
+#back-button {
+    float: left;
+    padding: 1em;
+}
+#back-button-2:hover {
+    color: antiquewhite;
+}
+#play-again:hover {
     color: antiquewhite;
 }
