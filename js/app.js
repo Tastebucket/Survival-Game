@@ -568,6 +568,9 @@ const stopGameLoop = () => {
     // nice lil title screen with cool fonts
     // what is the story of the game? who is avoiding what?
 
+    ///Fix
+    // powerup array pop/splice
+
 
 
 //////// LEVEL UP FUNCTION ////////
