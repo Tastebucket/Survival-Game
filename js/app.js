@@ -254,13 +254,13 @@ const seekers = []
 //     setInterval(enemy3.setDirection,300)
 //     console.log('Yahoo!')
 // }
-const newEnemy = () => {
-    smallEnemies.push(new Enemy(0, 0, 30, 40, 'brown',5,true))
+const newEnemy = (rate) => {
+    smallEnemies.push(new Enemy(0, 0, 30, 40, 'brown',rate,true))
     console.log('Hi')
     console.log(smallEnemies)
 }
-const newSeeker = () => {
-    seekers.push(new Seeker(getRandomCoordinates(game.width), getRandomCoordinates(game.height), 30, 40, 'lightsteelblue',2,true))
+const newSeeker = (rate) => {
+    seekers.push(new Seeker(getRandomCoordinates(game.width), getRandomCoordinates(game.height), 30, 40, 'lightsteelblue',rate,true))
     console.log('Gonna getcha')
     console.log(seekers)
 }
@@ -301,11 +301,12 @@ class Power {
     }
 }
 ///////Restart movement function
-const resumeSpeed = (thing, fast) => {
-    for (let i = 0; i > thing.length; i++) {
-        thing[i].speed = fast
+const resumeSpeed = (things, fast) => {
+    for (let i = 0; i < things.length; i++) {
+        things[i].speed = fast
     }
-    // console.log(thing)
+    console.log("This is fast in resume", fast)
+    console.log("This is things in resume", things)
     console.log('as you were')
 
 }
@@ -343,14 +344,16 @@ const timeStop = () => {
 }
 
 let point = 0
+
+///////////GAME LOOP ///////////
 const gameLoop = () => {
 
     ctx.clearRect(0,0, game.width, game.height)
     point += 1
     points.textContent = `${point}`
     if (player.alive){
-    player.render()
-    player.movePlayer()
+        player.render()
+        player.movePlayer()
     } else {
         stopGameLoop()
     }
@@ -373,38 +376,6 @@ const gameLoop = () => {
         powerArray[i].render()
         detectPower(powerArray[i])
     }
-    // enemy.moveEnemy()
-    // enemy2.moveEnemy()
-    // enemy3.moveEnemy()
-    // movement.textContent = `${player.x}, ${player.y}`
-    // points+=1
-    // score.textContent = `${points}`
-    
-    // if (player.x + player.width >= game.width) {
-    //     player.x = game.width - player.width
-    // }
-    // if (player.x <= 0) {
-    //     player.x = 0
-    // }
-    // if (player.y + player.height >= game.height) {
-    //     player.y = game.height - player.height
-    // }
-    // if (player.y <= 0) {
-    //     player.y = 0
-    // }
-
-    // if (enemy.alive) {
-    //     enemy.render ()
-    //     detectHit(enemy)
-    // }
-    // if (enemy2.alive) {
-    //     enemy2.render ()
-    //     detectHit(enemy2)
-    // }
-    // if (enemy3.alive) {
-    //     enemy3.render ()
-    //     detectHit(enemy3)
-    // }
 
 }
 
@@ -422,23 +393,37 @@ const setEnemyDirection = () => {
         smallEnemies[i].setDirection()
     }
 }
-document.addEventListener('DOMContentLoaded', function () {
-gameInterval
-const lvl1 = setInterval(newEnemy,5000)
-setTimeout(lvl2,15000)
-})
-setTimeout(createPower,8000)
+let gameInterval
+let lvl1
+let powerInterval
+let enemyMove
+// document.addEventListener('DOMContentLoaded', function () {
+//     gameInterval = setInterval(gameLoop, 30)
+//     lvl1 = setInterval(newEnemy,5000)
+//     powerInterval = setInterval(createPower,10000)
+//     enemyMove = setInterval(setEnemyDirection, 1500)
+//     //setTimeout(lvl2,15000)
+// })
 const lvl2 = () =>{
     const releaseSeeker = setInterval(newSeeker,8000)
 }
-const enemyMove = setInterval(setEnemyDirection, 1500)
 
-const gameInterval = setInterval(gameLoop, 30)
-const stopGameLoop = () => { clearInterval(gameInterval) }
+const stopGameLoop = () => { 
+    clearInterval(gameInterval) 
+    clearInterval(enemyMove)
+    clearInterval(powerInterval)
+    clearInterval(lvl1)
+}
 
 //////Title Screen Functions///////
 const startGame = () => {
     titleScreen.style.display = 'none'
+    gameInterval = setInterval(gameLoop, 30)
+    releaseEnemy = setInterval(newEnemy,8000,5)
+    releaseSeeker = setInterval(newSeeker,10000,2)
+    powerInterval = setInterval(createPower,10000)
+    enemyMove = setInterval(setEnemyDirection, 1500)
+    //setTimeout(lvl2,15000)
 }
 // const highlight = (event) => {
 //     event.target.style.color = 'white'
@@ -464,3 +449,9 @@ startButton.addEventListener('click',startGame)
     // nice lil title screen with cool fonts
     // what is the story of the game? who is avoiding what?
 
+
+
+//////// LEVEL UP FUNCTION ////////
+const lvlUp = () => {
+
+}
