@@ -16,37 +16,28 @@ canvas {
 #title-screen{
     max-width: 60em;
     width: 100%;
-    height: 100%;
+    height: 80%;
     background-color: blueviolet;
     margin: 0 auto;
     text-align: center;
     position: absolute;
 }
-#instruction-screen{
+#instruction-screen, #high-score-screen{
     max-width: 60em;
     width: 100%;
-    height: 100%;
+    height: 80%;
     background-color: blueviolet;
     margin: 0 auto;
     text-align: center;
     position: absolute;
     display: none;
 }
-#high-score-screen{
-    max-width: 60em;
-    width: 100%;
-    height: 100%;
-    background-color: blueviolet;
-    margin: 0 auto;
-    text-align: center;
-    position: absolute;
-    display: none;
-}
+
 #game-over-screen {
     width: 400px;
     background-color: blueviolet;
-    left: 50%;
-    top: 50%;
+    left: 60%;
+    top: 30%;
     transform: translate(-50%,-50%);
     flex-direction: column;
     justify-content: center;

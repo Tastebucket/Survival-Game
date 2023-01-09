@@ -56,6 +56,7 @@ const mainMenu = () => {
     point=0
     smallEnemies = []
     seekers = []
+    powerArray = []
     lvl=1
 }
 
@@ -344,7 +345,7 @@ const detectHit = (thing) => {
         // Points: Just simple score boost
         // invincibility: TBD
         // nuke: clear all enemy arrays
-const powerArray = []
+let powerArray = []
 class Power {
     constructor (x,y) {
         this.x = x
