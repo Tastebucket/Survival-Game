@@ -5,6 +5,7 @@ const container = document.getElementById('container')
 const points = document.getElementById('points')
 const titleScreen = document.getElementById('title-screen')
 const startButton = document.getElementById('start-button')
+const levelDisplay = document.getElementById('level')
 const ctx = game.getContext('2d')
 
 game.setAttribute('width', getComputedStyle(game)['width'])
@@ -185,7 +186,7 @@ class User {
         this.height = height
         this.color = color
         this.alive = true
-        this.speed = 15
+        this.speed = 13
         this.direction = {
             up: false,
             down: false,
@@ -255,7 +256,12 @@ const seekers = []
 //     console.log('Yahoo!')
 // }
 const newEnemy = (rate) => {
-    smallEnemies.push(new Enemy(0, 0, 30, 40, 'brown',rate,true))
+    place = getRandomCoordinates(2)
+    if (place===0) {
+        smallEnemies.push(new Enemy(0, 0, 30, 40, 'brown',rate,true))
+    } else {
+        smallEnemies.push(new Enemy((game.width-30), (game.height-40), 30, 40, 'brown',rate,true))
+    }
     console.log('Hi')
     console.log(smallEnemies)
 }
@@ -339,8 +345,8 @@ const timeStop = () => {
     for (let i = 0; i<seekers.length; i++) {
         seekers[i].speed = 0
     }
-    setTimeout(resumeSpeed,5000,smallEnemies,5)
-    setTimeout(resumeSpeed,5000,seekers,2)
+    setTimeout(resumeSpeed,5000,smallEnemies,(2+lvl))
+    setTimeout(resumeSpeed,5000,seekers, lvl)
 }
 
 let point = 0
@@ -394,7 +400,6 @@ const setEnemyDirection = () => {
     }
 }
 let gameInterval
-let lvl1
 let powerInterval
 let enemyMove
 // document.addEventListener('DOMContentLoaded', function () {
@@ -404,25 +409,27 @@ let enemyMove
 //     enemyMove = setInterval(setEnemyDirection, 1500)
 //     //setTimeout(lvl2,15000)
 // })
-const lvl2 = () =>{
-    const releaseSeeker = setInterval(newSeeker,8000)
-}
 
 const stopGameLoop = () => { 
     clearInterval(gameInterval) 
     clearInterval(enemyMove)
     clearInterval(powerInterval)
-    clearInterval(lvl1)
+    clearInterval(releaseEnemy)
+    clearInterval(releaseSeeker)
+    clearInterval(newLevel)
 }
 
 //////Title Screen Functions///////
 const startGame = () => {
     titleScreen.style.display = 'none'
-    gameInterval = setInterval(gameLoop, 30)
-    releaseEnemy = setInterval(newEnemy,8000,5)
-    releaseSeeker = setInterval(newSeeker,10000,2)
-    powerInterval = setInterval(createPower,10000)
+    gameInterval = setInterval(gameLoop, 50)
+    newEnemy(3)
+    setEnemyDirection()
+    releaseEnemy = setInterval(newEnemy,10000,(2+lvl))
+    releaseSeeker = setInterval(newSeeker,16000,lvl)
+    powerInterval = setInterval(createPower,18000)
     enemyMove = setInterval(setEnemyDirection, 1500)
+    newLevel = setInterval(lvlUp,35000)
     //setTimeout(lvl2,15000)
 }
 // const highlight = (event) => {
@@ -452,6 +459,21 @@ startButton.addEventListener('click',startGame)
 
 
 //////// LEVEL UP FUNCTION ////////
+let lvl = 1
+levelDisplay.textContent = `${lvl}`
 const lvlUp = () => {
-
+    if (lvl < 10) {
+    lvl +=1
+    }   else {
+    newEnemy(12)
+    newEnemy(12)
+    newSeeker(10)
+    }
+    for(let i=0; i<smallEnemies.length; i++) {
+        smallEnemies[i].speed=(2+lvl)
+    }
+    for(let i=0; i<seekers.length; i++) {
+        seekers[i].speed=lvl
+    }
+    levelDisplay.textContent=`${lvl}`
 }
