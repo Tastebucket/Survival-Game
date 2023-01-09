@@ -53,6 +53,7 @@ const mainMenu = () => {
     instructionScreen.style.display = 'none'
     highScoreScreen.style.display = 'none'
     gameOverScreen.style.display = 'none'
+    ///resets object arrays, points, and level
     point=0
     smallEnemies = []
     seekers = []
@@ -300,15 +301,7 @@ const getRandomCoordinates = (max) => {
 const player = new User(game.width/2, game.height/2, 20, 20, 'purple')
 let smallEnemies = []
 let seekers = []
-// const enemy = new Enemy(0, 0, 30, 40, 'brown',4,true)
-// const enemy2 = new Enemy(getRandomCoordinates(game.width), getRandomCoordinates(game.height), 30, 40, 'purple',8,true)
-// const enemy3 = new Enemy(getRandomCoordinates(game.width), getRandomCoordinates(game.height),40, 10, 'green',13, false)
 
-// const newOg = () => {
-//     enemy3.alive = true
-//     setInterval(enemy3.setDirection,300)
-//     console.log('Yahoo!')
-// }
 const newEnemy = () => {
     place = getRandomCoordinates(2)
     if (place===0) {
@@ -354,6 +347,7 @@ class Power {
         this.height = 40
         const rando = getRandomCoordinates(20)
         // console.log(`This is the random number: ${rando}`)
+        //determines what kind of power-up is deployed
         if (rando<8){
             this.color='green'
             this.type='pointer'
@@ -376,16 +370,7 @@ class Power {
         }
     }
 }
-///////Restart movement function
-const resumeSpeed = (things, fast) => {
-    for (let i = 0; i < things.length; i++) {
-        things[i].speed = fast
-    }
-    // console.log("This is fast in resume", fast)
-    // console.log("This is things in resume", things)
-    // console.log('as you were')
 
-}
 const createPower = () => {
         powerArray.push(new Power(getRandomCoordinates(game.width-25),getRandomCoordinates(game.height-40)))
 }
@@ -411,7 +396,18 @@ const detectPower = (thing) => {
         }
 }
 ////Power up functions
+///////Restart movement function
+const resumeSpeed = (things, fast) => {
+    for (let i = 0; i < things.length; i++) {
+        things[i].speed = fast
+    }
+}
+    // console.log("This is fast in resume", fast)
+    // console.log("This is things in resume", things)
+    // console.log('as you were')
+
 //Freeze Enemies
+
 const timeStop = () => {
     for (let i = 0; i<smallEnemies.length; i++) {
         smallEnemies[i].speed = 0
@@ -452,7 +448,6 @@ const destroy = () => {
     seekers=[]
     // console.log('bye')
 }
-
 let point = 0
 let newHighScore = 0
 theHighScore.textContent = 0
@@ -508,14 +503,9 @@ const setEnemyDirection = () => {
 let gameInterval
 let powerInterval
 let enemyMove
-// document.addEventListener('DOMContentLoaded', function () {
-//     gameInterval = setInterval(gameLoop, 30)
-//     lvl1 = setInterval(newEnemy,5000)
-//     powerInterval = setInterval(createPower,10000)
-//     enemyMove = setInterval(setEnemyDirection, 1500)
-//     //setTimeout(lvl2,15000)
-// })
-highScoreList = []
+
+//This allows the high scores to be recorded in the title screen
+let highScoreList = []
 const highScoreOrder = (a,b) => {
     return b-a
 }
@@ -538,6 +528,7 @@ const recordScores= () => {
     }
     scoreboard.appendChild(ulScores)
 }
+//Clears all intervals and records score
 const stopGameLoop = () => { 
     clearInterval(gameInterval) 
     clearInterval(enemyMove)
