@@ -3,6 +3,7 @@ body {
     background-color: rgb(150, 192, 25);
     background-size: cover;
     background-repeat: space;
+    color: orange;
 }
 canvas {
     background-color: aqua;
@@ -63,6 +64,7 @@ canvas {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    color: black;
 
   }
 main {
@@ -104,4 +106,7 @@ li {
 }
 #play-again:hover {
     color: antiquewhite;
+}
+#high-score-prompt {
+    display: none;
 }

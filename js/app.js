@@ -18,6 +18,8 @@ const playAgain = document.getElementById('play-again')
 const theHighScore = document.getElementById('the-high-score')
 const finalScore = document.getElementById('final-score')
 const scoreboard = document.getElementById('scoreboard')
+const highScorePrompt = document.getElementById('high-score-prompt')
+const initial = document.getElementById('initials')
 
 const ctx = game.getContext('2d')
 
@@ -28,14 +30,15 @@ game.height=600
 //////Title Screen Functions///////
 const startGame = () => {
     titleScreen.style.display = 'none'
+    levelDisplay.textContent = `${lvl}`
     gameInterval = setInterval(gameLoop, 50)
-    smallEnemies.push(new Enemy(getRandomCoordinates(game.width)-30, getRandomCoordinates(game.height)-40, 30, 40, 'brown',(lvl+2),true))
+    smallEnemies.push(new Enemy(getRandomCoordinates(game.width-30), getRandomCoordinates(game.height-40), 30, 40, 'brown',(lvl+2),true))
     setEnemyDirection()
-    releaseEnemy = setInterval(newEnemy,10000,(2+lvl))
-    releaseSeeker = setInterval(newSeeker,16000,lvl)
-    powerInterval = setInterval(createPower,18000)
+    releaseEnemy = setInterval(newEnemy,6000,(2+lvl))
+    releaseSeeker = setInterval(newSeeker,10000,lvl)
+    powerInterval = setInterval(createPower,10000)
     enemyMove = setInterval(setEnemyDirection, 1300)
-    newLevel = setInterval(lvlUp,35000)
+    newLevel = setInterval(lvlUp,12000)
     player.alive=true
     player.x=game.width/2
     player.y=game.height/2
@@ -53,12 +56,17 @@ const mainMenu = () => {
     instructionScreen.style.display = 'none'
     highScoreScreen.style.display = 'none'
     gameOverScreen.style.display = 'none'
+    highScorePrompt.style.display = 'none'
     ///resets object arrays, points, and level
     point=0
     smallEnemies = []
     seekers = []
     powerArray = []
     lvl=1
+}
+const playAgainMenu = () => {
+    recordScores()
+    mainMenu()
 }
 
 
@@ -67,7 +75,7 @@ instructionButton.addEventListener('click',viewInstructions)
 highScoreButton.addEventListener('click',viewHighScores)
 backButton.addEventListener('click',mainMenu)
 backButton2.addEventListener('click',mainMenu)
-playAgain.addEventListener('click',mainMenu)
+playAgain.addEventListener('click',playAgainMenu)
 
 class Enemy {
     constructor (x,y, width, height,color,speed,alive) {
@@ -348,13 +356,13 @@ class Power {
         const rando = getRandomCoordinates(20)
         // console.log(`This is the random number: ${rando}`)
         //determines what kind of power-up is deployed
-        if (rando<8){
+        if (rando<5){
             this.color='green'
             this.type='pointer'
-        } else if (rando<11) {
+        } else if (rando<9) {
             this.color="black"
             this.type="stopper"
-        } else if (rando<14){
+        } else if (rando<13){
             this.color = 'pink'
             this.type = 'slowpoke'
         } else if (rando<18) {
@@ -421,13 +429,13 @@ const timeStop = () => {
 //Slow enemies
 const timeSlow = () => {
     for (let i = 0; i<smallEnemies.length; i++) {
-        smallEnemies[i].speed /= 2
+        smallEnemies[i].speed /= 3
     }
     for (let i = 0; i<seekers.length; i++) {
-        seekers[i].speed /= 2
+        seekers[i].speed /= 3
     }
-    setTimeout(resumeSpeed,5000,smallEnemies,(2+lvl))
-    setTimeout(resumeSpeed,5000,seekers, lvl)
+    setTimeout(resumeSpeed,6000,smallEnemies,(2+lvl))
+    setTimeout(resumeSpeed,6000,seekers, lvl)
     // console.log('tooslow')
 }
 //Boosts score
@@ -437,8 +445,8 @@ const morePoints = () => {
 }
 //Speeds Up player
 const speedBoost = () => {
-    player.speed += 5
-    setTimeout((function (){player.speed -=5}), 5000)
+    player.speed += 8
+    setTimeout((function (){player.speed -=8}), 5000)
     // console.log('greased')
 }
 
@@ -505,14 +513,42 @@ let powerInterval
 let enemyMove
 
 //This allows the high scores to be recorded in the title screen
+// let highScoreList = []
+// const highScoreOrder = (a,b) => {
+//     return b-a
+// }
+// const recordScores= () => {
+//     highScoreList.push(point)
+//     highScoreList.sort(highScoreOrder)
+//     // console.log(highScoreList)
+//     const oldScores = document.getElementById('the-scores')
+//     if (oldScores) {
+//         oldScores.remove()
+//     }
+//     const ulScores = document.createElement('ul')
+//     ulScores.id = 'the-scores'
+//     for (let i = 0; i<5; i++) {
+//         const liScore = document.createElement('li')
+//         if (highScoreList[i]) {
+//             liScore.textContent = highScoreList[i]
+//         }
+//         ulScores.appendChild(liScore)
+//     }
+//     scoreboard.appendChild(ulScores)
+// }
 let highScoreList = []
-const highScoreOrder = (a,b) => {
-    return b-a
+class ScoreObject {
+    constructor (initials, score) {
+    this.initials= initials
+    this.score = score
+    }
 }
-const recordScores= () => {
-    highScoreList.push(point)
+const highScoreOrder = (a,b) => {
+    return b.score-a.score
+}
+const recordScores = () => {
+    highScoreList.push(new ScoreObject(initial.value,point))
     highScoreList.sort(highScoreOrder)
-    // console.log(highScoreList)
     const oldScores = document.getElementById('the-scores')
     if (oldScores) {
         oldScores.remove()
@@ -522,7 +558,7 @@ const recordScores= () => {
     for (let i = 0; i<5; i++) {
         const liScore = document.createElement('li')
         if (highScoreList[i]) {
-            liScore.textContent = highScoreList[i]
+            liScore.textContent = `${highScoreList[i].initials}      ${highScoreList[i].score}`
         }
         ulScores.appendChild(liScore)
     }
@@ -542,7 +578,13 @@ const stopGameLoop = () => {
         newHighScore=point
         theHighScore.textContent=`${newHighScore}`
     }
-    recordScores()
+    if (highScoreList[4]) {
+        if (point>highScoreList[4].score){
+            highScorePrompt.style.display = 'initial'
+        }
+    } else {
+        highScorePrompt.style.display = 'initial'
+    }
 }
 
 
