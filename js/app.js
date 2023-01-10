@@ -396,13 +396,8 @@ const detectPower = (thing) => {
             } else if (thing.type === 'destroyer') {
                 destroy()
             }
-            console.log(powerArray)
             const index = powerArray.indexOf(thing)
-            console.log(index)
             powerArray.splice(index, 1)
-            console.log(powerArray)
-            
-
         }
 }
 ////Power up functions
@@ -576,7 +571,6 @@ const stopGameLoop = () => {
 
     ///Fix
     // powerup array pop/splice
-
 
 
 //////// LEVEL UP FUNCTION ////////
