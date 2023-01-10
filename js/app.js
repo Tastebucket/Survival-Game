@@ -331,7 +331,6 @@ const detectHit = (thing) => {
         && player.x + player.width > thing.x
         && player.y < thing.y + thing.height
         && player.y + player.height > thing.y) {
-            // console.log('HIT!')
             player.alive = false
         }
 }
@@ -354,12 +353,11 @@ class Power {
         this.width = 25
         this.height = 40
         const rando = getRandomCoordinates(20)
-        // console.log(`This is the random number: ${rando}`)
         //determines what kind of power-up is deployed
-        if (rando<5){
+        if (rando<7){
             this.color='green'
             this.type='pointer'
-        } else if (rando<9) {
+        } else if (rando<10) {
             this.color="black"
             this.type="stopper"
         } else if (rando<13){
@@ -387,7 +385,6 @@ const detectPower = (thing) => {
         && player.x + player.width > thing.x
         && player.y < thing.y + thing.height
         && player.y + player.height > thing.y) {
-            // console.log('Boosted!')
             if (thing.type === 'stopper') {
                 timeStop()
             } else if (thing.type === 'pointer') {
@@ -410,9 +407,6 @@ const resumeSpeed = (things, fast) => {
         things[i].speed = fast
     }
 }
-    // console.log("This is fast in resume", fast)
-    // console.log("This is things in resume", things)
-    // console.log('as you were')
 
 //Freeze Enemies
 
@@ -508,34 +502,7 @@ const setEnemyDirection = () => {
         smallEnemies[i].setDirection()
     }
 }
-let gameInterval
-let powerInterval
-let enemyMove
 
-//This allows the high scores to be recorded in the title screen
-// let highScoreList = []
-// const highScoreOrder = (a,b) => {
-//     return b-a
-// }
-// const recordScores= () => {
-//     highScoreList.push(point)
-//     highScoreList.sort(highScoreOrder)
-//     // console.log(highScoreList)
-//     const oldScores = document.getElementById('the-scores')
-//     if (oldScores) {
-//         oldScores.remove()
-//     }
-//     const ulScores = document.createElement('ul')
-//     ulScores.id = 'the-scores'
-//     for (let i = 0; i<5; i++) {
-//         const liScore = document.createElement('li')
-//         if (highScoreList[i]) {
-//             liScore.textContent = highScoreList[i]
-//         }
-//         ulScores.appendChild(liScore)
-//     }
-//     scoreboard.appendChild(ulScores)
-// }
 let highScoreList = []
 class ScoreObject {
     constructor (initials, score) {
