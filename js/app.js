@@ -396,7 +396,12 @@ const detectPower = (thing) => {
             } else if (thing.type === 'destroyer') {
                 destroy()
             }
-            powerArray.pop()
+            console.log(powerArray)
+            const index = powerArray.indexOf(thing)
+            console.log(index)
+            powerArray.splice(index, 1)
+            console.log(powerArray)
+            
 
         }
 }
